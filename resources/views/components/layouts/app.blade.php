@@ -15,11 +15,23 @@
 
 <body class="font-sans antialiased">
     <livewire:navigation />
+    <div id="scrollIndicator" class="fixed top-0 left-0 h-1 bg-emerald-700 w-0 z-50"></div>
 
     {{ $slot }}
 
     @livewireScripts
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        function updateScrollIndicator() {
+            const scrollIndicator = document.getElementById('scrollIndicator');
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollIndicator.style.width = scrollPercent + "%";
+        }
+
+        window.addEventListener('scroll', updateScrollIndicator);
+    </script>
 </body>
 
 </html>
