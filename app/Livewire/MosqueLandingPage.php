@@ -6,14 +6,6 @@ use Livewire\Component;
 
 class MosqueLandingPage extends Component
 {
-    public $prayerTimes = [
-        'Fajr' => '5:45 AM',
-        'Zuhr' => '1:15 PM',
-        'Asr' => '4:30 PM',
-        'Maghrib' => '7:15 PM',
-        'Isha' => '8:45 PM'
-    ];
-
     public $upcomingEvents = [
         [
             'title' => 'Jumaah Prayer',

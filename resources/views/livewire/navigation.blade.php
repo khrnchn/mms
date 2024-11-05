@@ -7,19 +7,20 @@
                 <div class="flex">
                     <!-- Logo -->
                     <div class="flex-shrink-0 flex items-center">
-                        <a href="/" wire:navigate class="text-emerald-600 text-lg font-bold">MBTHO</a>
+                        <a href="/home" wire:navigate class="text-emerald-600 text-lg font-bold">MBTHO</a>
                     </div>
 
                     <!-- Desktop Navigation -->
-                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-2">
                         @foreach($menuItems as $index => $item)
                         <a
                             href="{{ $item['route'] }}"
                             wire:click="setActive({{ $index }})"
                             @if(!str_starts_with($item['route'], '#' )) wire:navigate @endif
-                            class="inline-flex items-center px-1 pt-1 text-sm font-medium {{ $item['active'] 
-                                ? 'text-emerald-900 border-b-2 border-emerald-500'
-                                : 'text-emerald-500 hover:text-emerald-700 hover:border-emerald-300 border-b-2 border-transparent' }}">
+                            class="inline-flex items-center px-3 py-2 text-sm font-medium rounded-md transition
+                                {{ $item['active'] 
+                                    ? 'text-white bg-emerald-600 border-b-0 my-3' 
+                                    : 'text-emerald-500 hover:text-emerald-700 hover:bg-emerald-100 my-3' }}">
                             {{ $item['label'] }}
                         </a>
                         @endforeach

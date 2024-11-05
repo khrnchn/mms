@@ -1,28 +1,19 @@
-<!-- Contact & Location Section -->
-<div id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid md:grid-cols-2 gap-8">
-        <div>
-            <h2 class="text-2xl font-bold text-emerald-900 mb-4">Location</h2>
-            <div class="bg-white rounded-lg shadow-sm p-6">
-                <p class="text-emerald-800">Bandar Tun Hussein Onn</p>
-                <p class="text-emerald-600">Cheras, Selangor</p>
-                <div class="mt-4">
-                    <a href="#" class="inline-flex items-center text-emerald-600 hover:text-emerald-700 transition duration-300">
-                        Get Directions
-                        <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                    </a>
+<div id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <h2 class="text-3xl font-bold text-emerald-900 mb-8 text-center">Contact Us</h2>
+    <div class="bg-gray-50 rounded-lg shadow-md overflow-hidden">
+        <div class="grid md:grid-cols-2">
+            <div class="p-6 md:border-r border-gray-200">
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-emerald-800 mb-2">Location</h3>
+                    <p class="text-emerald-600">Bandar Tun Hussein Onn</p>
+                    <p class="text-emerald-600">Cheras, Selangor</p>
                 </div>
-            </div>
-        </div>
-        <div>
-            <h2 class="text-2xl font-bold text-emerald-900 mb-4">Contact Us</h2>
-            <div class="bg-white rounded-lg shadow-sm p-6">
-                <p class="text-emerald-800">Phone: +60 3-1234 5678</p>
-                <p class="text-emerald-600">Email: info@masjidbthon.com</p>
-                <div class="mt-4 space-x-4">
-                    <!-- Social Media Icons -->
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-emerald-800 mb-2">Contact</h3>
+                    <p class="text-emerald-600">Phone: +60 3-1234 5678</p>
+                    <p class="text-emerald-600">Email: info@masjidbthon.com</p>
+                </div>
+                <div class="flex space-x-4">
                     <a href="#" class="text-emerald-600 hover:text-emerald-700 transition duration-300">
                         <span class="sr-only">Facebook</span>
                         <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
@@ -32,6 +23,17 @@
                     <!-- Add more social media icons here -->
                 </div>
             </div>
+            <div class="bg-gray-200 h-64 md:h-auto">
+                <livewire:google-map>
+            </div>
+        </div>
+        <div class="bg-emerald-700 p-4">
+            <a href="#" class="inline-flex items-center justify-center w-full text-white hover:text-emerald-100 transition duration-300 text-base font-medium">
+                Get Directions
+                <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+            </a>
         </div>
     </div>
 </div>

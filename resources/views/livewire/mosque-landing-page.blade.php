@@ -1,20 +1,7 @@
 <div class="min-h-screen bg-emerald-50">
     <livewire:hero-section />
 
-    <!-- Prayer Times Section -->
-    <div id="prayer-times" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2 class="text-3xl font-bold text-emerald-900 text-center mb-8">
-            Prayer Times
-        </h2>
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-            @foreach($prayerTimes as $prayer => $time)
-            <div class="bg-white rounded-lg shadow-sm p-6 text-center transform transition duration-500 hover:scale-105">
-                <h3 class="text-lg font-medium text-emerald-800">{{ $prayer }}</h3>
-                <p class="mt-2 text-2xl font-semibold text-emerald-600">{{ $time }}</p>
-            </div>
-            @endforeach
-        </div>
-    </div>
+    <livewire:prayer-times />
 
     <!-- Events Section -->
     <div id="events" class="bg-emerald-600/5 py-12">
