@@ -1,6 +1,6 @@
 <!-- Hero Section -->
-<div class="relative overflow-hidden">
-    <div class="bg-emerald-600">
+<div class="relative overflow-hidden" style="background-image: url('{{ asset("images/mosque.jpg") }}'); background-size: cover; background-position: center;">
+    <div class="bg-emerald-600 bg-opacity-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
             <div class="text-center">
                 <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
