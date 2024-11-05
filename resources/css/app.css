@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom Scrollbar Styling */
+.scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+    background: rgba(232, 240, 253, 0.5); /* Light background for scrollbar track */
+    border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #4CAF50; /* Scrollbar thumb color */
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.5); /* Adds padding around thumb */
+}
+
+.scrollbar-thin:hover::-webkit-scrollbar-thumb {
+    background-color: #388E3C; /* Darker shade when hovering */
+}
+
