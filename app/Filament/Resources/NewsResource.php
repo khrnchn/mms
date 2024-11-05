@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\NewsResource\Pages;
 use App\Filament\Resources\NewsResource\RelationManagers;
 use App\Models\News;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
@@ -104,6 +105,7 @@ class NewsResource extends Resource
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('status')
+                    ->formatStateUsing(fn($state) => ucfirst($state))
                     ->badge()
                     ->colors([
                         'danger' => 'draft',
@@ -118,7 +120,7 @@ class NewsResource extends Resource
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('published_at')
-                    ->dateTime()
+                    ->formatStateUsing(fn($record) => Carbon::parse($record->start_date)->format('d F Y h:i A'))
                     ->sortable(),
             ])
             ->filters([
