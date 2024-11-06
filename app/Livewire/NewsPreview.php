@@ -10,6 +10,7 @@ class NewsPreview extends Component
     public function render()
     {
         $news = News::where('status', 'published')
+            ->orderByDesc('featured')
             ->orderBy('published_at', 'desc')
             ->paginate(3);
 

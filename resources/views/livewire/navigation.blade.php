@@ -7,7 +7,7 @@
                 <div class="flex">
                     <!-- Logo -->
                     <div class="flex-shrink-0 flex items-center">
-                        <a href="/home" wire:navigate class="text-emerald-600 text-lg font-bold">MBTHO</a>
+                        <a href="/" wire:navigate class="text-emerald-600 text-lg font-bold">MBTHO</a>
                     </div>
 
                     <!-- Desktop Navigation -->

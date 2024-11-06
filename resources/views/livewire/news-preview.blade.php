@@ -36,7 +36,7 @@
                     </h3>
 
                     <p class="text-emerald-600 mb-4 line-clamp-3">
-                        {{ strip_tags($item->content) }} 
+                        {{ strip_tags($item->content) }}
                     </p>
 
                     <div class="flex items-center justify-between text-sm text-emerald-500">
@@ -60,7 +60,7 @@
                     </div>
 
                     <a
-                        href="#"
+                        href="{{ route('news.view', $item->slug) }}"
                         class="mt-4 inline-flex items-center text-emerald-600 hover:text-emerald-700 transition-colors">
                         Read More
                         <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

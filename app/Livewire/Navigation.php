@@ -8,7 +8,7 @@ class Navigation extends Component
 {
     // Menu items can be managed here and easily updated
     public $menuItems = [
-        ['label' => 'Home', 'route' => '/home', 'active' => true],
+        ['label' => 'Home', 'route' => '/', 'active' => true],
         ['label' => 'Prayer Times', 'route' => '#prayer-times', 'active' => false],
         ['label' => 'Events', 'route' => '#events', 'active' => false],
         ['label' => 'Contact', 'route' => '#contact', 'active' => false],
