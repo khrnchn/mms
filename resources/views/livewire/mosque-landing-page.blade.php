@@ -3,6 +3,8 @@
 
     <livewire:prayer-times />
 
+    <livewire:news-preview />
+
     <livewire:events />
 
     <livewire:contact-us />

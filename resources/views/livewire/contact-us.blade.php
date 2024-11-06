@@ -1,4 +1,4 @@
-<div id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+<div id="contact" class="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <h2 class="text-3xl font-bold text-emerald-900 mb-8 text-center">Contact Us</h2>
     <div class="bg-gray-50 rounded-lg shadow-md overflow-hidden">
         <div class="grid md:grid-cols-2">

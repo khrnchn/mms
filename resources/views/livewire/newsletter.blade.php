@@ -1,5 +1,5 @@
 <!-- Newsletter Subscription -->
-<div class="bg-emerald-600/5 py-12">
+<div id="newsletter" class="bg-emerald-600/5 py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-bold text-emerald-900 text-center mb-8">
             Stay Updated
