@@ -54,11 +54,13 @@ class EventResource extends Resource
                             ->placeholder('Enter event start date and time')
                             ->label('Start Date')
                             ->native(false)
+                            ->before('end_date')
                             ->required(),
                         DateTimePicker::make('end_date')
                             ->placeholder('Enter event end date and time')
                             ->label('End Date')
                             ->native(false)
+                            ->after('start_date')
                             ->required(),
                         TextInput::make('location')
                             ->placeholder('Enter event location')
