@@ -10,6 +10,7 @@ class Navigation extends Component
     public $menuItems = [
         ['label' => 'Home', 'route' => '/', 'active' => true],
         ['label' => 'Prayer Times', 'route' => '#prayer-times', 'active' => false],
+        ['label' => 'News', 'route' => '#news-preview', 'active' => false],
         ['label' => 'Events', 'route' => '#events', 'active' => false],
         ['label' => 'Contact', 'route' => '#contact', 'active' => false],
     ];
