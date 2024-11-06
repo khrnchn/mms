@@ -8,7 +8,7 @@ export default defineConfig({
                 "resources/css/app.css",
                 "resources/js/app.js",
                 "resources/css/filament/admin/theme.css",
-                "resources/views/**/*.blade.php",
+
             ],
             refresh: true,
         }),
