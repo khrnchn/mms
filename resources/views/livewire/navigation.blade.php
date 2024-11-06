@@ -27,14 +27,23 @@
                     </div>
                 </div>
 
-                <!-- Login Button (Desktop) -->
+                <!-- Login/Dashboard Button (Desktop) -->
                 <div class="hidden sm:ml-6 sm:flex sm:items-center">
+                    @if(auth()->check()) <!-- Check if the user is logged in -->
+                    <a
+                        href="/panel" 
+                        wire:navigate
+                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                        Dashboard
+                    </a>
+                    @else
                     <a
                         href="/panel/login"
                         wire:navigate
                         class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
                         Login
                     </a>
+                    @endif
                 </div>
 
                 <!-- Mobile menu button -->
