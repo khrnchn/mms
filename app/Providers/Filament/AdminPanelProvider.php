@@ -76,7 +76,8 @@ class AdminPanelProvider extends PanelProvider
                         '2xl' => null,
                     ]),
             ])
-            ->databaseNotifications();
+            ->databaseNotifications()
+            ->globalSearchKeyBindings(['command+k', 'ctrl+k']);
 
         // $hooks = new ReflectionClass(PanelsRenderHook::class);
         // $hooks = $hooks->getConstants();

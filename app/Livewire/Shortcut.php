@@ -17,7 +17,7 @@ class Shortcut extends Component implements HasForms, HasActions
     public function goToHome()
     {
         return Action::make('home')
-            ->icon('heroicon-o-home')
+            // ->icon('heroicon-o-home')
             ->label('Home')
             ->color('primary')
             ->keyBindings(['command+h', 'ctrl+h'])

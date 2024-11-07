@@ -23,6 +23,8 @@ class NewsResource extends Resource
 
     protected static ?string $navigationGroup = 'Manage';
 
+    protected static ?string $recordTitleAttribute = 'title';
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
