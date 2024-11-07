@@ -28,5 +28,9 @@ class AppServiceProvider extends ServiceProvider
             PanelsRenderHook::TOPBAR_START,
             fn(): string => Blade::render('<livewire:shortcut />'),
         );
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
+            fn(): string => Blade::render('<livewire:login-shortcut />'),
+        );
     }
 }
