@@ -16,7 +16,6 @@ class Events extends Component
 
     public function fetchUpcomingEvents()
     {
-        // Fetch upcoming events from the Event model
         $this->upcomingEvents = Event::where('start_date', '>=', now()) 
             ->orderBy('start_date')
             ->get(); 

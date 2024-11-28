@@ -12,6 +12,7 @@ class Navigation extends Component
         ['label' => 'Prayer Times', 'route' => '#prayer-times', 'active' => false],
         ['label' => 'News', 'route' => '#news-preview', 'active' => false],
         ['label' => 'Events', 'route' => '#events', 'active' => false],
+        ['label' => 'Clubs', 'route' => '#clubs', 'active' => false],
         ['label' => 'Contact', 'route' => '#contact', 'active' => false],
     ];
 

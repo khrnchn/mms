@@ -7,6 +7,8 @@
 
     <livewire:events />
 
+    <livewire:list-clubs />
+
     <livewire:contact-us />
 
     <livewire:newsletter />
