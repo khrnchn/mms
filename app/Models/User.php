@@ -62,4 +62,9 @@ class User extends Authenticatable
             ->withPivot('role', 'joined_at')
             ->withTimestamps();
     }
+
+    public function notAdmin(User $user)
+    {
+        return $this->where('is_admin', false);
+    }
 }
