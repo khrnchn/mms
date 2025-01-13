@@ -14,6 +14,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class CommitteeResource extends Resource
 {
@@ -22,6 +23,14 @@ class CommitteeResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $navigationGroup = 'Manage';
+
+    public static function canCreate(): bool
+    {
+        $user = Auth::user();
+        
+        return $user->isAdmin();
+    }
+
 
     public static function getNavigationBadge(): ?string
     {
@@ -49,6 +58,7 @@ class CommitteeResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->recordUrl(null)
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
                     ->searchable()
@@ -66,11 +76,11 @@ class CommitteeResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->hidden(fn() => !Auth::user()->isAdmin()),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->hidden(fn() => !Auth::user()->isAdmin()),
                 ]),
             ]);
     }
