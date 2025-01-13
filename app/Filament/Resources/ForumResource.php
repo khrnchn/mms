@@ -6,6 +6,8 @@ use App\Filament\Resources\ClubResource\Pages;
 use App\Filament\Resources\ForumResource\Pages\CreateForum;
 use App\Filament\Resources\ForumResource\Pages\EditForum;
 use App\Filament\Resources\ForumResource\Pages\ListForums;
+use App\Filament\Resources\ForumResource\RelationManagers\TopicsRelationManager;
+use App\Filament\Resources\TopicResource\RelationManagers\RepliesRelationManager;
 use App\Models\Forum;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
@@ -77,6 +79,14 @@ class ForumResource extends Resource
             ->filters([
                 //
             ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            TopicsRelationManager::class,
+            // RepliesRelationManager::class,
+        ];
     }
 
     public static function getPages(): array
