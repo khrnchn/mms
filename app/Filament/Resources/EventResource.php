@@ -38,6 +38,13 @@ class EventResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    public static function canCreate(): bool
+    {
+        $user = Auth::user();
+
+        return $user->isAdmin();
+    }
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
@@ -184,7 +191,7 @@ class EventResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->hidden(fn() => !Auth::user()->isAdmin()),
                 ]),
             ]);
     }

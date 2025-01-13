@@ -31,7 +31,6 @@ class CommitteeResource extends Resource
         return $user->isAdmin();
     }
 
-
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();

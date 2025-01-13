@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class NewsResource extends Resource
@@ -24,6 +25,13 @@ class NewsResource extends Resource
     protected static ?string $navigationGroup = 'Manage';
 
     protected static ?string $recordTitleAttribute = 'title';
+
+    public static function canCreate(): bool
+    {
+        $user = Auth::user();
+
+        return $user->isAdmin();
+    }
 
     public static function getNavigationBadge(): ?string
     {
@@ -101,6 +109,7 @@ class NewsResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->recordUrl(null)
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
@@ -137,11 +146,11 @@ class NewsResource extends Resource
                     ->query(fn(Builder $query) => $query->where('featured', true)),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->hidden(fn() => !Auth::user()->isAdmin()),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->hidden(fn() => !Auth::user()->isAdmin()),
                 ]),
             ]);
     }

@@ -25,6 +25,13 @@ class ClubResource extends Resource
 
     protected static ?string $navigationGroup = 'Manage';
 
+    public static function canCreate(): bool
+    {
+        $user = Auth::user();
+
+        return $user->isAdmin();
+    }
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
@@ -161,9 +168,9 @@ class ClubResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->hidden(fn() => !Auth::user()->isAdmin()),
+                    Tables\Actions\ForceDeleteBulkAction::make()->hidden(fn() => !Auth::user()->isAdmin()),
+                    Tables\Actions\RestoreBulkAction::make()->hidden(fn() => !Auth::user()->isAdmin()),
                 ]),
             ]);
     }
