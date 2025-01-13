@@ -5,7 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\EventRegistrationResource\RelationManagers\RegistrationsRelationManager;
 use App\Filament\Resources\EventResource\Pages;
 use App\Filament\Resources\EventResource\RelationManagers;
+use App\Filament\Resources\EventResource\RelationManagers\ParticipantsRelationManager;
 use App\Models\Event;
+use App\Models\EventParticipant;
 use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -15,13 +17,16 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class EventResource extends Resource
 {
@@ -82,6 +87,7 @@ class EventResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->recordUrl(null)
             ->columns([
                 TextColumn::make('name')
                     // ->description(fn(Event $record): string => $record->description)
@@ -129,7 +135,52 @@ class EventResource extends Resource
                     }),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->hidden(fn() => !Auth::user()->isAdmin()),
+                Action::make('register')
+                    ->requiresConfirmation()
+                    ->modalHeading('Register for Event')
+                    ->modalDescription('Are you sure you want to register for this event?')
+                    ->modalSubmitActionLabel('Yes, register')
+                    ->modalCancelActionLabel('Cancel')
+                    ->hidden(function (Event $event) {
+                        $user = Auth::user();
+
+                        return EventParticipant::where('event_id', $event->id)
+                            ->where('user_id', $user->id)
+                            ->exists();
+                    })
+                    ->action(
+                        function (Event $event) {
+                            $user = Auth::user();
+
+                            $existingRegistration = EventParticipant::where('event_id', $event->id)
+                                ->where('user_id', $user->id)
+                                ->exists();
+
+                            if ($existingRegistration) {
+                                Notification::make()
+                                    ->title('Registration failed.')
+                                    ->body('You have already registered for this event.')
+                                    ->danger()
+                                    ->send();
+
+                                return;
+                            }
+
+                            EventParticipant::create([
+                                'event_id' => $event->id,
+                                'user_id' => $user->id,
+                                'role' => 'member',
+                                'joined_at' => now(),
+                            ]);
+
+                            Notification::make()
+                                ->title('Registration success.')
+                                ->body('You have successfully registered for this event.')
+                                ->success()
+                                ->send();
+                        }
+                    )
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -141,7 +192,7 @@ class EventResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RegistrationsRelationManager::class,
+            ParticipantsRelationManager::class,
         ];
     }
 

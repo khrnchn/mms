@@ -4,15 +4,12 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Event;
-use App\Models\EventRegistration;
-use Illuminate\Support\Facades\Validator;
+use App\Models\EventParticipant;
+use Illuminate\Support\Facades\Auth;
 
 class ViewEvent extends Component
 {
     public $event;
-    public $name = '';
-    public $email = '';
-    public $phone = '';
     public $registrationSuccess = false;
 
     public function mount($eventId)
@@ -22,16 +19,19 @@ class ViewEvent extends Component
 
     public function registerForEvent()
     {
-        $validatedData = $this->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:20',
-        ]);
+        // Ensure the user is authenticated
+        if (!Auth::check()) {
+            session()->flash('error', 'Please login first.');
+            return;
+        }
+
+        // Get the authenticated user
+        $user = Auth::user();
 
         try {
-            // Check if registration already exists
-            $existingRegistration = EventRegistration::where('event_id', $this->event->id)
-                ->where('email', $this->email)
+            // Check if the user is already registered for the event
+            $existingRegistration = EventParticipant::where('event_id', $this->event->id)
+                ->where('user_id', $user->id)
                 ->first();
 
             if ($existingRegistration) {
@@ -39,21 +39,19 @@ class ViewEvent extends Component
                 return;
             }
 
-            // Create new registration
-            EventRegistration::create([
+            // Create a new event participant record
+            EventParticipant::create([
                 'event_id' => $this->event->id,
-                'name' => $this->name,
-                'email' => $this->email,
-                'phone' => $this->phone,
-                'status' => 'pending'
+                'user_id' => $user->id,
+                'role' => 'participant', // Default role
+                'joined_at' => now(), // Current timestamp
+                'status' => 'pending', // Default status
             ]);
 
-            // Reset form and show success message
+            // Set success state and flash message
             $this->registrationSuccess = true;
-            $this->reset(['name', 'email', 'phone']);
-            session()->flash('success', 'Registration successful! We will contact you soon.');
+            session()->flash('success', 'Registration successful! You are now a participant.');
         } catch (\Exception $e) {
-            dd($e);
             session()->flash('error', 'Registration failed. Please try again.');
         }
     }

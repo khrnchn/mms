@@ -35,75 +35,36 @@
             </div>
         </div>
 
-        {{-- Registration Form --}}
+        {{-- Registration Section --}}
         <div class="p-6">
             @if(session()->has('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative pb-3" role="alert">
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
                     {{ session('success') }}
                 </div>
             @endif
 
             @if(session()->has('error'))
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative pb-3" role="alert">
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
                     {{ session('error') }}
                 </div>
             @endif
 
             <h2 class="text-2xl font-bold text-emerald-900 mb-4">Event Registration</h2>
-            <form wire:submit.prevent="registerForEvent">
-                <div class="space-y-4">
-                    <div>
-                        <label for="name" class="block text-emerald-700 font-medium mb-2">Full Name</label>
-                        <input 
-                            type="text" 
-                            wire:model="name" 
-                            id="name" 
-                            class="w-full px-3 py-2 border border-emerald-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                            required
-                        >
-                        @error('name') 
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p> 
-                        @enderror
-                    </div>
 
-                    <div>
-                        <label for="email" class="block text-emerald-700 font-medium mb-2">Email Address</label>
-                        <input 
-                            type="email" 
-                            wire:model="email" 
-                            id="email" 
-                            class="w-full px-3 py-2 border border-emerald-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                            required
-                        >
-                        @error('email') 
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p> 
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label for="phone" class="block text-emerald-700 font-medium mb-2">Phone Number</label>
-                        <input 
-                            type="tel" 
-                            wire:model="phone" 
-                            id="phone" 
-                            class="w-full px-3 py-2 border border-emerald-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                            required
-                        >
-                        @error('phone') 
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p> 
-                        @enderror
-                    </div>
-
-                    <div>
-                        <button 
-                            type="submit" 
-                            class="w-full bg-emerald-600 text-white py-2 rounded-md hover:bg-emerald-700 transition duration-300"
-                        >
-                            Register for Event
-                        </button>
-                    </div>
+            @auth
+                {{-- Registration Button for Authenticated Users --}}
+                <button 
+                    wire:click="registerForEvent" 
+                    class="w-full bg-emerald-600 text-white py-2 rounded-md hover:bg-emerald-700 transition duration-300"
+                >
+                    Register for Event
+                </button>
+            @else
+                {{-- Prompt for Unauthenticated Users --}}
+                <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mb-4" role="alert">
+                    <p>You must <a href="/panel/login" class="font-semibold underline">log in</a> to register for this event.</p>
                 </div>
-            </form>
+            @endauth
         </div>
     </div>
 </div>

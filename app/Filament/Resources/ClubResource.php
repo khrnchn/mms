@@ -3,11 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ClubResource\Pages;
-use App\Filament\Resources\ClubResource\RelationManagers;
 use App\Filament\Resources\ClubResource\RelationManagers\ClubUsersRelationManager;
 use App\Models\Club;
 use App\Models\ClubUser;
-use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
@@ -77,6 +75,7 @@ class ClubResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->recordUrl(null)
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
@@ -110,7 +109,6 @@ class ClubResource extends Resource
                     ->query(fn(Builder $query): Builder => $query->where('is_active', true))
                     ->label('Active Clubs'),
             ])
-            ->recordUrl(null)
             ->actions([
                 Tables\Actions\ViewAction::make()->hidden(fn() => !Auth::user()->isAdmin()),
                 Tables\Actions\EditAction::make()->hidden(fn() => !Auth::user()->isAdmin()),

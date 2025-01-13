@@ -26,8 +26,14 @@ class Event extends Model
         return $this->belongsTo(User::class, 'organizer_id');
     }
 
-    public function registrations()
+    public function participants()
     {
-        return $this->hasMany(EventRegistration::class,'');
+        return $this->hasMany(EventParticipant::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'event_participants')
+        ->withPivot('role', 'joined_at', 'status');
     }
 }

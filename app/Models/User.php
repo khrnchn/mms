@@ -51,6 +51,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function isAdmin(): bool
+    {
+        return (bool) $this->is_admin;
+    }
+
     public function clubUsers()
     {
         return $this->hasMany(ClubUser::class);
@@ -63,8 +68,14 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
-    public function isAdmin(): bool
+    public function eventParticipants()
     {
-        return (bool) $this->is_admin;
+        return $this->hasMany(EventParticipant::class);
+    }
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class, 'event_participants')
+        ->withPivot('role', 'joined_at', 'status');
     }
 }
