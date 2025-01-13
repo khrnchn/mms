@@ -63,8 +63,8 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
-    public function notAdmin(User $user)
+    public function isAdmin(): bool
     {
-        return $this->where('is_admin', false);
+        return (bool) $this->is_admin;
     }
 }

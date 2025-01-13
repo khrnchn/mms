@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Club extends Model
@@ -30,6 +31,11 @@ class Club extends Model
         return $this->belongsToMany(User::class)
             ->withPivot('role', 'joined_at')
             ->withTimestamps();
+    }
+
+    public function clubUsers(): HasMany
+    {
+        return $this->hasMany(ClubUser::class);
     }
 
     public function events()

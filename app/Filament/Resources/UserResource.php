@@ -39,6 +39,11 @@ class UserResource extends Resource
         return static::getModel()::count();
     }
 
+    public static function canViewAny(): bool
+    {
+        return auth()->user()->id == 1;
+    }
+
     public static function form(Form $form): Form
     {
         return $form
