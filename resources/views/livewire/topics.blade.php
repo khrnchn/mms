@@ -47,7 +47,7 @@
         </div>
     @else
         <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-6">
-            <p>Please <a href="{{ route('login') }}" class="font-semibold underline">log in</a> to create a topic.</p>
+            <p>Please <a href="/panel/login" class="font-semibold underline">log in</a> to create a topic.</p>
         </div>
     @endauth
 
