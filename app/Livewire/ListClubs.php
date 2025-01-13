@@ -23,7 +23,10 @@ class ListClubs extends Component
     {
         // Check if user is authenticated
         if (!Auth::check()) {
-            $this->dispatch('open-login-modal');
+            session()->flash(
+                'error',
+                'Please login first.'
+            );
             return;
         }
 
@@ -39,7 +42,6 @@ class ListClubs extends Component
             return;
         }
 
-        // Add user to the club
         ClubUser::create([
             'club_id' => $clubId,
             'user_id' => $user->id,
