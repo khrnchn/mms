@@ -21,12 +21,12 @@ class CommitteeResource extends Resource
 
     protected static ?string $navigationGroup = 'Manage';
 
-    public static function canViewAny(): bool
-    {
-        $user = Auth::user();
+    // public static function canViewAny(): bool
+    // {
+    //     $user = Auth::user();
 
-        return $user->isAdmin();
-    }
+    //     return $user->isAdmin();
+    // }
 
     public static function canCreate(): bool
     {
