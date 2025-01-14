@@ -23,11 +23,11 @@ class PrayerTimes extends Component
     {
         // Replace with actual fetching logic if using API or database
         $this->prayerTimes = [
-            'Fajr' => '06:00 AM',
+            'Fajr' => '06:09 AM',
             'Dhuhr' => '1:15 PM',
-            'Asr' => '04:30 PM',
-            'Maghrib' => '07:00 PM',
-            'Isha' => '08:00 PM',
+            'Asr' => '04:40 PM',
+            'Maghrib' => '07:20 PM',
+            'Isha' => '08:40 PM',
         ];
     }
 
@@ -53,7 +53,7 @@ class PrayerTimes extends Component
 
     public function render()
     {
-        $this->currentTime = now()->format('h:i:s A'); // Update current time for each render
+        $this->currentTime = now()->format('h:i:s A'); 
         $this->updatePrayerInfo();
         return view('livewire.prayer-times');
     }

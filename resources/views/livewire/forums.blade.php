@@ -1,5 +1,5 @@
 <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-6">Forums</h1>
+    <h1 class="text-3xl text-center text-gray-800 font-bold mb-8">Forums</h1>
 
     <div class="space-y-4">
         @foreach ($forums as $forum)

@@ -12,6 +12,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 class RoleResource extends Resource
 {
@@ -23,7 +24,9 @@ class RoleResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return auth()->user()->id == 1;
+        $user = Auth::user();
+
+        return $user->isAdmin();
     }
 
     public static function form(Form $form): Form
