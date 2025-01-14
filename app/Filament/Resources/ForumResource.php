@@ -40,7 +40,16 @@ class ForumResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count();
+        $user = Auth::user();
+
+        if ($user->isAdmin()) {
+            return static::getModel()::count();
+        }
+
+        // Count forums where the user has created at least one topic
+        return Forum::whereHas('topics', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->count();
     }
 
     public static function form(Form $form): Form
