@@ -23,10 +23,10 @@ class PrayerTimes extends Component
     {
         // Replace with actual fetching logic if using API or database
         $this->prayerTimes = [
-            'Fajr' => '05:30 AM',
-            'Dhuhr' => '12:15 PM',
-            'Asr' => '03:30 PM',
-            'Maghrib' => '06:00 PM',
+            'Fajr' => '06:00 AM',
+            'Dhuhr' => '1:15 PM',
+            'Asr' => '04:30 PM',
+            'Maghrib' => '07:00 PM',
             'Isha' => '08:00 PM',
         ];
     }
