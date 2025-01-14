@@ -47,7 +47,13 @@ class EventResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count();
+        $user = Auth::user();
+
+        if ($user->isAdmin()) {
+            return static::getModel()::count();
+        }
+
+        return $user->events()->count();
     }
 
     public static function form(Form $form): Form

@@ -26,6 +26,13 @@ class NewsResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
+    public static function canViewAny(): bool
+    {
+        $user = Auth::user();
+
+        return $user->isAdmin();
+    }
+
     public static function canCreate(): bool
     {
         $user = Auth::user();
