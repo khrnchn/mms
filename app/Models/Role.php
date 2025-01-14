@@ -16,6 +16,6 @@ class Role extends Model
 
     public function committees()
     {
-        return $this->hasMany(Committee::class, 'role', 'name');
+        return $this->hasMany(Committee::class);
     }
 }
