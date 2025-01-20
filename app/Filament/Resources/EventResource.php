@@ -116,18 +116,21 @@ class EventResource extends Resource
                     ->label('Location')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('start_date')
-                    ->label('Start Date')
+                TextColumn::make('combined_dates')
+                    ->label('Dates')
                     ->sortable()
-                    ->formatStateUsing(fn($record) => Carbon::parse($record->start_date)->format('d F Y h:i A')),
-                TextColumn::make('end_date')
-                    ->label('End Date')
-                    ->sortable()
-                    ->formatStateUsing(fn($record) => Carbon::parse($record->end_date)->format('d F Y h:i A')),
+                    ->formatStateUsing(
+                        fn($record) =>
+                        Carbon::parse($record->start_date)->format('d F Y h:i A') . ' - ' .
+                            Carbon::parse($record->end_date)->format('d F Y h:i A')
+                    ),
                 TextColumn::make('participants_limit')
                     ->label('Participants Limit')
                     ->sortable()
                     ->formatStateUsing(fn($state) => $state === 0 ? 'No limit' : $state),
+                TextColumn::make('users_count')
+                    ->counts('users')
+                    ->label('Participants Count'),
             ])
             ->filters([
                 Filter::make('start_date')
