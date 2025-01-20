@@ -47,13 +47,21 @@
                     <div class="flex justify-between items-center">
                         <div class="text-sm text-gray-500">
                             <span class="font-semibold">{{ $club->users_count }}</span> Members
+                            @if ($club->participants_limit !== null)
+                                / {{ $club->participants_limit }} Limit
+                            @endif
                         </div>
 
-                        <button
-                            wire:click="joinClub({{ $club->id }})"
-                            class="bg-emerald-600 text-white px-4 py-2 rounded-md text-sm hover:bg-emerald-700 transition duration-300">
-                            Join Club
-                        </button>
+                        {{-- Join Button --}}
+                        @if ($club->participants_limit !== null && $club->users_count >= $club->participants_limit)
+                            <span class="text-sm text-red-500">Full</span>
+                        @else
+                            <button
+                                wire:click="joinClub({{ $club->id }})"
+                                class="bg-emerald-600 text-white px-4 py-2 rounded-md text-sm hover:bg-emerald-700 transition duration-300">
+                                Join Club
+                            </button>
+                        @endif
                     </div>
                 </div>
             </div>

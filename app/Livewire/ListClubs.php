@@ -42,6 +42,21 @@ class ListClubs extends Component
             return;
         }
 
+        // Get the club
+        $club = Club::find($clubId);
+
+        // Check if the club has a participants limit
+        if ($club->participants_limit !== null) {
+            $currentMembersCount = $club->users_count;
+
+            // Check if the club has reached its participants limit
+            if ($currentMembersCount >= $club->participants_limit) {
+                session()->flash('error', 'This club has reached its maximum number of members.');
+                return;
+            }
+        }
+
+        // Create a new club membership
         ClubUser::create([
             'club_id' => $clubId,
             'user_id' => $user->id,

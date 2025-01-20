@@ -58,11 +58,15 @@ class ClubResource extends Resource
                             ->rows(3)
                             ->columnSpanFull(),
 
-                        // Forms\Components\TextInput::make('location')
-                        //     ->label('Mosque Location'),
-
                         Forms\Components\DatePicker::make('established_date')
                             ->label('Establishment Date'),
+
+                        // Add the participants_limit field
+                        Forms\Components\TextInput::make('participants_limit')
+                            ->numeric()
+                            ->minValue(0)
+                            ->nullable()
+                            ->label('Participants Limit'),
                     ])->columns(2),
 
                 Forms\Components\Section::make('Contact Information')
@@ -94,10 +98,6 @@ class ClubResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                // Tables\Columns\TextColumn::make('location')
-                //     ->searchable()
-                //     ->label('Mosque Location'),
-
                 Tables\Columns\TextColumn::make('established_date')
                     ->date()
                     ->sortable(),
@@ -105,6 +105,11 @@ class ClubResource extends Resource
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean()
                     ->label('Active'),
+
+                Tables\Columns\TextColumn::make('participants_limit')
+                    ->label('Participants Limit')
+                    ->sortable()
+                    ->formatStateUsing(fn($state) => $state ?? 'No limit'),
 
                 Tables\Columns\TextColumn::make('users_count')
                     ->counts('users')
@@ -155,6 +160,34 @@ class ClubResource extends Resource
                                     ->send();
 
                                 return;
+                            }
+
+                            if ($club->participants_limit !== null) {
+                                $currentMembersCount = ClubUser::where('club_id', $club->id)->count();
+
+                                if ($currentMembersCount >= $club->participants_limit) {
+                                    Notification::make()
+                                        ->title('Registration failed.')
+                                        ->body('This club has reached its maximum number of members.')
+                                        ->danger()
+                                        ->send();
+
+                                    return;
+                                }
+                            }
+
+                            if ($club->participants_limit !== null) {
+                                $currentMembersCount = ClubUser::where('club_id', $club->id)->count();
+
+                                if ($currentMembersCount >= $club->participants_limit) {
+                                    Notification::make()
+                                        ->title('Registration failed.')
+                                        ->body('This club has reached its maximum number of members.')
+                                        ->danger()
+                                        ->send();
+
+                                    return;
+                                }
                             }
 
                             ClubUser::create([

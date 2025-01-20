@@ -11,13 +11,14 @@ class Club extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name', 
-        'description', 
-        'location', 
-        'established_date', 
-        'contact_email', 
+        'name',
+        'description',
+        'location',
+        'established_date',
+        'contact_email',
         'contact_phone',
-        'is_active'
+        'is_active',
+        'participants_limit',
     ];
 
     protected $dates = ['established_date', 'deleted_at'];
