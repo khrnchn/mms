@@ -3,12 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TransactionResource\Pages;
+use App\Filament\Resources\TransactionResource\Widgets\DonationStats;
 use App\Models\Transaction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 
@@ -69,6 +71,7 @@ class TransactionResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('amount')
+                    ->summarize(Sum::make())
                     ->money('MYR')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('bill_code')
@@ -104,6 +107,13 @@ class TransactionResource extends Resource
             'index' => Pages\ListTransactions::route('/'),
             'create' => Pages\CreateTransaction::route('/create'),
             'edit' => Pages\EditTransaction::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            DonationStats::class,
         ];
     }
 }
