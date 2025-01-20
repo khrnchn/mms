@@ -39,6 +39,18 @@ class ViewEvent extends Component
                 return;
             }
 
+            // Check if the event has a participants limit
+            if ($this->event->participants_limit !== null) {
+                // Get the current number of participants
+                $currentParticipantsCount = EventParticipant::where('event_id', $this->event->id)->count();
+
+                // Check if the event has reached its participants limit
+                if ($currentParticipantsCount >= $this->event->participants_limit) {
+                    session()->flash('error', 'This event has reached its maximum number of participants.');
+                    return;
+                }
+            }
+
             // Create a new event participant record
             EventParticipant::create([
                 'event_id' => $this->event->id,

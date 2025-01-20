@@ -93,10 +93,15 @@ class EventResource extends Resource
                             ->label('Organizer')
                             ->relationship('organizer', 'name')
                             ->required(),
+                        TextInput::make('participants_limit')
+                            ->placeholder('Enter participants limit')
+                            ->label('Participants Limit')
+                            ->numeric()
+                            ->minValue(0)
+                            ->nullable(),
                     ]),
             ]);
     }
-
     public static function table(Table $table): Table
     {
         return $table
@@ -119,9 +124,10 @@ class EventResource extends Resource
                     ->label('End Date')
                     ->sortable()
                     ->formatStateUsing(fn($record) => Carbon::parse($record->end_date)->format('d F Y h:i A')),
-                // TextColumn::make('organizer.name')
-                //     ->label('Created By')
-                //     ->sortable(),
+                TextColumn::make('participants_limit')
+                    ->label('Participants Limit')
+                    ->sortable()
+                    ->formatStateUsing(fn($state) => $state === 0 ? 'No limit' : $state),
             ])
             ->filters([
                 Filter::make('start_date')

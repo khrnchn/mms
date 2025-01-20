@@ -16,6 +16,7 @@ class Event extends Model
         'end_date',
         'location',
         'organizer_id',
+        'participants_limit',
     ];
 
     /**
