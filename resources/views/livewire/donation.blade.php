@@ -47,6 +47,24 @@
             @enderror
         </div>
 
+        <!-- Donation Type Field -->
+        <div class="mb-6">
+            <label for="donation_type" class="block text-gray-700 text-sm font-bold mb-2">Donation Type</label>
+            <select
+                id="donation_type"
+                wire:model="donation_type"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+                <option value="">Select Donation Type</option>
+                <option value="sedekah">Sedekah</option>
+                <option value="infaq">Infaq</option>
+                <option value="ramadhan">Ramadhan</option>
+            </select>
+            @error('donation_type')
+                <span class="text-red-500 text-xs italic">{{ $message }}</span>
+            @enderror
+        </div>
+
         <!-- Submit Button -->
         <div class="flex items-center justify-between">
             <button

@@ -14,44 +14,38 @@ class Donation extends Component
     public $name = '';
     public $email = '';
     public $amount = '';
+    public $donation_type = ''; 
 
-    // Handle form submission
     public function submitDonation()
     {
-        // Validate the form inputs
         $this->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'amount' => 'required|numeric|min:1',
+            'donation_type' => 'required|in:sedekah,infaq,ramadhan', 
         ]);
 
-        // Generate a unique bill code
         $billCode = 'DONATION-' . uniqid();
 
-        // Save the transaction to the database
         $transaction = Transaction::create([
             'bill_code' => $billCode,
             'name' => $this->name,
             'email' => $this->email,
             'amount' => $this->amount,
-            'status' => 'success', // terus hardcode success for demo
+            'donation_type' => $this->donation_type, 
+            'status' => 'success', 
         ]);
 
-        // Create a ToyyibPay bill
         $paymentUrl = $this->createToyyibPayBill($billCode, $this->amount, $this->name, $this->email);
 
-        // Redirect the user to ToyyibPay payment page
         return redirect()->away($paymentUrl);
     }
 
-    // Create a ToyyibPay bill using the package
     protected function createToyyibPayBill($billCode, $amount, $name, $email)
     {
         try {
-            // Initialize Guzzle HTTP client
             $guzzleClient = new Client();
 
-            // Initialize ToyyibPay
             $toyyibpay = new Toyyibpay(
                 config('toyyibpay.sandbox'), // Sandbox mode
                 config('toyyibpay.client_secret'), // ToyyibPay user secret key
@@ -59,10 +53,8 @@ class Donation extends Component
                 $guzzleClient // Guzzle client
             );
 
-            // Log the category code for debugging
             Log::info('ToyyibPay Category Code:', ['categoryCode' => config('toyyibpay.category_code')]);
 
-            // Create the bill object
             $billObject = (object) [
                 'billName' => 'Mosque Donation',
                 'billDescription' => 'Donation for Mosque Development',
@@ -82,29 +74,24 @@ class Donation extends Component
                 'billChargeToCustomer' => 1, // 1 to charge payment fees to customer
             ];
 
-            // Create the bill
             $response = $toyyibpay->createBill(config('toyyibpay.category_code'), $billObject);
 
-            // Log the response for debugging
             Log::info('ToyyibPay API Response:', (array) $response);
 
-            // Check if the bill was created successfully
             if (isset($response[0]->BillCode)) { // Access the nested BillCode property
                 $billCode = $response[0]->BillCode;
                 return $toyyibpay->billPaymentLink($billCode);
             }
 
-            // Handle error
             session()->flash('error', 'Failed to create payment bill. Please try again.');
             return null;
         } catch (\Exception $e) {
-            // Handle exception
             Log::error('ToyyibPay API Error:', ['error' => $e->getMessage()]);
             session()->flash('error', 'An error occurred: ' . $e->getMessage());
             return null;
         }
     }
-    // Render the view
+
     public function render()
     {
         return view('livewire.donation');

@@ -8,6 +8,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 
@@ -53,7 +54,7 @@ class TransactionResource extends Resource
                 Forms\Components\TextInput::make('status')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('transaction_id')
+                Forms\Components\TextInput::make('donation_type')
                     ->maxLength(255),
             ]);
     }
@@ -79,8 +80,15 @@ class TransactionResource extends Resource
                         'success' => 'success',
                         'failed' => 'danger',
                     }),
-                Tables\Columns\TextColumn::make('transaction_id')
-                    ->searchable(),
+                BadgeColumn::make('donation_type')
+                    ->label('Donation Type')
+                    ->color(fn(string $state): string => match ($state) {
+                        'sedekah' => 'success', // Green badge for sedekah
+                        'infaq' => 'primary',   // Blue badge for infaq
+                        'ramadhan' => 'warning', // Yellow badge for ramadhan
+                        default => 'gray',      // Gray badge for unknown types
+                    })
+                    ->formatStateUsing(fn(string $state): string => ucfirst($state)),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable(),

@@ -16,5 +16,6 @@ class Transaction extends Model
         'amount',
         'status',
         'transaction_id',
+        'donation_type',
     ];
 }
