@@ -39,6 +39,11 @@ class ViewEvent extends Component
                 return;
             }
 
+            if (!$user->date_of_birth || !$user->gender) {
+                session()->flash('error', 'Please complete your profile at http://mms.test/panel/profile first.');
+                return;
+            }
+
             // Check if the event has a participants limit
             if ($this->event->participants_limit !== null) {
                 // Get the current number of participants

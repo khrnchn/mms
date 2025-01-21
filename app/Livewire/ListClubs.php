@@ -42,6 +42,11 @@ class ListClubs extends Component
             return;
         }
 
+        if (!$user->date_of_birth || !$user->gender) {
+            session()->flash('error', 'Please complete your profile at http://mms.test/panel/profile first.');
+            return;
+        }
+
         // Get the club
         $club = Club::find($clubId);
 
