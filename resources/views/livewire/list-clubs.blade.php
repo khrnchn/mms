@@ -11,7 +11,7 @@
 
         @if (session()->has('error'))
         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-            {{ session('error') }}
+            {!! session('error') !!}
         </div>
         @endif
 
@@ -47,20 +47,20 @@
                     <div class="flex justify-between items-center">
                         <div class="text-sm text-gray-500">
                             <span class="font-semibold">{{ $club->users_count }}</span> Members
-                            @if ($club->participants_limit !== null)
-                                / {{ $club->participants_limit }} Limit
+                            @if ($club->participants_limit !== null || $club->participants_limit !== 0)
+                            / {{ $club->participants_limit }} Limit
                             @endif
                         </div>
 
                         {{-- Join Button --}}
                         @if ($club->participants_limit !== null && $club->users_count >= $club->participants_limit)
-                            <span class="text-sm text-red-500">Full</span>
+                        <span class="text-sm text-red-500">Full</span>
                         @else
-                            <button
-                                wire:click="joinClub({{ $club->id }})"
-                                class="bg-emerald-600 text-white px-4 py-2 rounded-md text-sm hover:bg-emerald-700 transition duration-300">
-                                Join Club
-                            </button>
+                        <button
+                            wire:click="joinClub({{ $club->id }})"
+                            class="bg-emerald-600 text-white px-4 py-2 rounded-md text-sm hover:bg-emerald-700 transition duration-300">
+                            Join Club
+                        </button>
                         @endif
                     </div>
                 </div>
